@@ -1,0 +1,64 @@
+Flight.html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+ <meta charset="UTF-8">
+ <meta name="viewport" content="width=device-width, initial-scale=1.0">
+ <title>Available Flights</title>
+ <style>
+ body { font-family: Arial; background: #f0f6fc; }
+ header { background: #003366; color: white; text-align: center; padding: 
+15px; }
+ .flight-card {
+ background: white; max-width: 500px; margin: 20px auto; padding: 20px;
+ border-radius: 10px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+ }
+ button { background: #003366; color: white; border: none; padding: 10px; 
+width: 100%; cursor: pointer; border-radius: 6px; }
+ button:hover { background: #00509e;
+</style>
+</head>
+<body>
+ <header>
+ <h1>Available Flights</h1>
+ </header>
+ <div id="results"></div>
+ <script>
+ function getParams() {
+ const params = {};
+ new URLSearchParams(window.location.search).forEach((val, key) => { 
+params[key] = val; });
+ return params;
+ }
+ const params = getParams();
+ const flights = [
+ { airline: "Air India", time: "08:30 AM", price: "₹5000" },
+ { airline: "IndiGo", time: "12:45 PM", price: "₹4500" },
+ { airline: "SpiceJet", time: "06:15 PM", price: "₹4800" }
+ ];
+ let resultDiv = document.getElementById("results");
+ resultDiv.innerHTML = `<h2 style="text-align:center;">Flights from 
+${params.from} to ${params.to} on ${params.date}</h2>`;
+ flights.forEach((flight, i) => {
+ resultDiv.innerHTML += `
+ <div class="flight-card">
+ <h3>${flight.airline}</h3>
+ <p><strong>Time:</strong> ${flight.time}</p>
+ <p><strong>Class:</strong> ${params.class}</p>
+ <p><strong>Passengers:</strong> ${params.passengers}</p>
+ <p><strong>Price:</strong> ${flight.price}</p>
+ <button 
+onclick="bookFlight('${flight.airline}','${flight.time}','${flight.price}')">Book 
+Now</button>
+ </div>
+ `;
+ });
+function bookFlight(airline, time, price) {
+ window.location.href = 
+`booking.html?from=${params.from}&to=${params.to}&date=${params.dat
+e}&class=${params.class}&passengers=${params.passengers}&airline=${ai
+rline}&time=${time}&price=${price}`;
+ }
+ </script>
+</body>
+</html>
